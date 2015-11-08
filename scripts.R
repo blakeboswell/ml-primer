@@ -66,14 +66,15 @@ y <- data[, 6]
 ## logistic function
 g <- function(z) 1 / (1 + exp(-z))
 
-## gradient function
+## gradient object
+## contains labels, features, and gradient function
 grad.obj <- function(x, y) {
   x <- as.matrix(x)
   y <- as.matrix(y)
   m <- ncol(x)
   
   fxn <- function(theta){
-    (1/m)* (t(x) %*%(g(x %*% theta) - y))
+    t(x) %*% (g(x %*% theta) - y)
   }
   
   return(

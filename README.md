@@ -33,7 +33,7 @@ Summary Points:
 ## Cost Function for Logistic Regression
 To fit the parameters theta of the Logistic regression equation we need a convex cost function:
 
-J(theta) = -(1/m) * Sum(Cost(g(z), y))
+J(theta) = -(1/m) * Sum(Cost(g(z), y)), where z = theta^T*x
 
 The following is the Logistic regression cost function in R.  The argument yhat represents the prediction produced by the Logistic regression equation and the argument y represents the true label.  Note yhat in (0,1) and y in {0,1}.
 
@@ -65,24 +65,27 @@ cost <- function(yhat, y) -y*log(yhat) - (1-y)*log(1 - yhat)
 ```
 
 ## Minimizing the Logistic Regression Function
-I'm going to use gradient decent just for the sake of going through the steps. Therefore, i'll need the gradient of J(theta).  Substituting `cost` into `J(theta)` above and taking the derivative gives us the following function:
-```r
+I'm going to use gradient descent to go through the process of implementing it in R. 
 
+The first step will be to define the gradient of the J(theta).  I'll leave any explanation of that derivation to other sources.  Here is the result in R code:
+```r
+t(x) %*% (g(x %*% theta) - y)
 ```	
 
-
+One way to set up the necessary structures and functions for performing gradient descent for Logistic regression is as follows:
 ```r
 ## logistic function
 g <- function(z) 1 / (1 + exp(-z))
 
-## gradient function
+## gradient object
+## contains labels, features, and gradient function
 grad.obj <- function(x, y) {
   x <- as.matrix(x)
   y <- as.matrix(y)
   m <- ncol(x)
   
   fxn <- function(theta){
-    (1/m)* (t(x) %*%(g(x %*% theta) - y))
+    t(x) %*% (g(x %*% theta) - y)
   }
   
   return(
