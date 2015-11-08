@@ -31,7 +31,11 @@ Summary Points:
 - The Logistic function, g(z), is greater than or equal to 0.5 when z = theta^T * x is greater than or equal to 0.
 
 ## Cost Function for Logistic Regression
-To fit the parameters theta of the Logistic regression equation we need a convex cost function.  The following is the Logistic regression cost function in R.  The argument yhat represents the prediction produced by the Logistic regression equation and the argument y represents the true label.  Note yhat in (0,1) and y in {0,1}.
+To fit the parameters theta of the Logistic regression equation we need a convex cost function:
+
+J(theta) = -(1/m) * Sum(Cost(g(z), y))
+
+The following is the Logistic regression cost function in R.  The argument yhat represents the prediction produced by the Logistic regression equation and the argument y represents the true label.  Note yhat in (0,1) and y in {0,1}.
 
 ```r
 cost <- function(yhat, y){
@@ -42,7 +46,7 @@ cost <- function(yhat, y){
   }
 }
 ```
-Looking at the performance of the cost function for different values of yhat we see:
+By examining a plot of performance of the cost function for different values of yhat we can intuit that this function is indeed convex. 
 ```r
 yhat <- seq(0.01, 0.99, 0.01)
 cost_y0 <- cost(yhat, 0)
@@ -54,6 +58,18 @@ matplot (yhat, cbind (cost_y0, cost_y1), pch = 1,
 legend("center", inset=0, legend=c("y==0", "y==1"), pch=1, col=c(2,4), horiz=TRUE)
 ```
 ![alt text](https://cloud.githubusercontent.com/assets/12782539/11022303/50653736-8629-11e5-9df1-49d38eb06d27.png "Figure II")
+
+We can express the cost function without an if-statement as follows:
+```r
+cost <- function(yhat, y) -y*log(yhat) - (1-y)*log(1 - yhat)
+```
+
+## Minimizing the Logistic Regression Function
+I'm going to use gradient decent just for the sake of going through the steps. Therefore, i'll need the gradient of J(theta).  Substituting `cost` into `J(theta)` above and taking the derivative gives us the following function:
+```r
+
+```	
+
 
 ## Decision Boundary
 
