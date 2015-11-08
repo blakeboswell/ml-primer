@@ -69,6 +69,9 @@ I'm going to use gradient descent to go through the process of implementing it i
 
 The first step will be to define the gradient of the J(theta).  I'll leave any explanation of that derivation to other sources.  Here is the result in R code:
 ```r
+## logistic function
+g <- function(z) 1 / (1 + exp(-z))
+## gradient of J(theta)
 t(x) %*% (g(x %*% theta) - y)
 ```	
 
