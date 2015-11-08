@@ -63,42 +63,44 @@ head(data)
 x <- data[, 1:4]
 y <- data[, 6]
 
-
-
-# From calculation, we expect that the local minimum occurs at x=9/4
-
-x_old = 0
-x_new = 6 # The algorithm starts at x=6
-alpha = 0.01 # step size
-precision = 0.00001
-
 ## logistic function
 g <- function(z) 1 / (1 + exp(-z))
 
 ## gradient function
-gradient <- function(x, y) {
-  x <- x
-  y <- y
-  m <- length(x)
+grad.obj <- function(x, y) {
+  x <- as.matrix(x)
+  y <- as.matrix(y)
+  m <- ncol(x)
+  
   fxn <- function(theta){
-    t((1/m)* (t(x) %*% (g(x %*% t(theta)) - y))) 
+    (1/m)* (t(x) %*%(g(x %*% theta) - y))
   }
-  return(list(
-    fxn = fxn
-  ))
+  
+  return(
+    list(m = m, labels = y, features = x, fxn = fxn)
+  )
 }
 
-p <- gradient(x,y)
-
-grad.descent <- function(dx, maxiter = 1000, alpha = 0.1, TOL = 0.00001){
-  m <- length(x)
-  theta_n = matrix(0, nrow = m, ncol = 1)
+## gradient descent method
+grad.descent <- function(grad.obj, maxiter = 1000, alpha = 0.05){
+  theta_n = matrix(0, nrow = grad.obj$m, ncol = 1)
   for(i in 1:maxiter){
     theta_o = theta_n
-    theta_n = theta_o - alpha * dx(theta_o)
-    if(abs(theta_n - theta_o) < TOL){break}
+    theta_n = theta_o - alpha * grad.obj$fxn(theta_o)
   }
   theta_n
 }
 
-grad.descent(p$fxn)
+fit_theta <- grad.descent(grad.obj(x,y))
+
+length(x)
+class(fit_theta)
+
+p <- g(as.matrix(x) %*% fit_theta)
+px <- ifelse(p > 0.5, 1, 0)
+
+sum(px == y) / nrow(data)
+
+View(data.frame(p, y))
+warnings()
+ncol(as.matrix(x))

@@ -71,6 +71,37 @@ I'm going to use gradient decent just for the sake of going through the steps. T
 ```	
 
 
+```r
+## logistic function
+g <- function(z) 1 / (1 + exp(-z))
+
+## gradient function
+grad.obj <- function(x, y) {
+  x <- as.matrix(x)
+  y <- as.matrix(y)
+  m <- ncol(x)
+  
+  fxn <- function(theta){
+    (1/m)* (t(x) %*%(g(x %*% theta) - y))
+  }
+  
+  return(
+    list(m = m, labels = y, features = x, fxn = fxn)
+  )
+}
+
+## gradient descent method
+grad.descent <- function(grad.obj, maxiter = 1000, alpha = 0.05){
+  theta_n = matrix(0, nrow = grad.obj$m, ncol = 1)
+  for(i in 1:maxiter){
+    theta_o = theta_n
+    theta_n = theta_o - alpha * grad.obj$fxn(theta_o)
+  }
+  theta_n
+}
+```
+
+
 ## Decision Boundary
 
 
