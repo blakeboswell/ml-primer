@@ -12,9 +12,12 @@ The Logistic function, `g(z)`, satisfies the requirement that it returns a value
 
 Plotting the Logistic function in `R`:
 ```r
+## logistic function
 g <- function(z) 1 / (1 + exp(-z))
 
-plot(x = seq(-5, 5, 0.1), y = g(seq(-5, 5, 0.1)),
+## plot of logistic function over range [-5. 5] by 0.1
+z <- seq(-5, 5, 0.1)
+plot(x = z, y = g(z),
      main = 'Logistic Function, g(z) = 1 / (1 + exp(z))',
      xlab = 'z', ylab='g(z)', 
      col = ifelse(g(seq(-5, 5, 0.1)) < 0.5, 2, 4))
