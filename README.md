@@ -1,10 +1,10 @@
 ## Modeling 101 - Logistic Regression
 This post is my project to reinforce the material from the Logistic regression section of Andrew Ng's Machine learning Coursera [course](https://www.coursera.org/learn/machine-learning/home/welcome).  I am familiar with Logistic regression and have applied it succesfully to clasification problems in the past.  My goal with this post is to strengthen my understanding of the connection between the hypothesis, decision boundary, loss function, and parameter optimization involved.
 
-## Logistic Regression for Classification 
+### Logistic Regression for Classification 
 To set up the problem:  given an observed set of labels `Y` and corresponding features `X` we want to predict what label, `y`, should be assigned to a new set of features `x`.  I will first consider the binary class problem, where the labels `Y` only take on values in {0,1}.
 
-## Hypothesis Representation
+### Hypothesis Representation
 For binary classification we formulate a hypothesis that returns a value in (0,1) representing the probability that a set of observed features, `x`, corresponds to a label, `y`.
 
 #### Logistic Function
@@ -33,7 +33,7 @@ Summary Points:
 - For binary classification, the Logistic function, `g(z)` where `z = theta^T * x`, returns the probability that a set of features, `x`, corresponds to a label, `y`.
 - The Logistic function, `g(z)`, is greater than or equal to 0.5 when `z = theta^T * x` is greater than or equal to 0.
 
-## Cost Function for Logistic Regression
+### Cost Function for Logistic Regression
 To fit the parameters theta of the Logistic regression equation we need a convex cost function:
 
 `J(theta) = -(1/m) * Sum(Cost(g(z), y)), where z = theta^T*x`
@@ -67,7 +67,7 @@ We can express the cost function without an if-statement as follows:
 cost <- function(yhat, y) -y*log(yhat) - (1-y)*log(1 - yhat)
 ```
 
-## Minimizing the Logistic Regression Function
+### Minimizing the Logistic Regression Function
 I'm going to use gradient descent for the excercise of implementing it in `R`. 
 
 The first step will be to define the gradient of the `J(theta)`.  I'll leave any explanation of that derivation to other sources.  Here is the result in `R` code:
@@ -112,7 +112,7 @@ grad.descent <- function(grad.obj, maxiter = 1000, alpha = 0.05){
 ```
 
 
-## Decision Boundary
+### Decision Boundary
 
 
 
