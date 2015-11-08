@@ -19,7 +19,7 @@ plot(x = seq(-5, 5, 0.1), y = g(seq(-5, 5, 0.1)),
      xlab = 'z', ylab='g(z)', 
      col = ifelse(g(seq(-5, 5, 0.1)) < 0.5, "red", "blue"))
 ```
-![Alt text](plots/logistic-ex?raw=true "Logistic Function")
+![Alt text](plots/logistic-ex.svg?raw=true "Logistic Function")
 
 We can see the additional property of the Logistic function that g(z) >= 0.5 when z >= 0.
 
