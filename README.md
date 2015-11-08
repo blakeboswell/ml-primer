@@ -110,7 +110,39 @@ grad.descent <- function(grad.obj, maxiter = 1000, alpha = 0.05){
   theta_n
 }
 ```
+To test this implementation of Logistic regression we can use the Iris data set in `R`.  The Iris data set contains three species of Iris and features.  To simplify this to a binary classification problem we will create a new variable `setosa` which will be 1 if the observation is a setosa and 0 if it is not.
 
+```r
+require(dplyr)
+## make 0,1 class for species
+data <- iris %>% mutate(setosa = as.integer(setosa == 'setosa')) %>% 
+  select(-Species)
+
+## split features and labels
+x <- data %>% select(-setosa)
+y <- data %>% select(setosa)
+```
+
+Next we will run the `grad.descent` method to find the best fit `theta`.  Then we can plug `theta` back into the Logistic function to produce a probability that an observation is a setosa.  We will then apply the decision rule if probability of an observation being a setosa is greater than 0.5 then label it as a setosa, otherwise do not.
+
+```r
+## use gradient descent to fit parameter
+fit_theta <- grad.descent(grad.obj(x,y))
+
+## generate predictions using the best fit theta
+p_yhat <- g(as.matrix(x) %*% fit_theta)
+
+## convert probabilities to 0,1 label
+yhat <- ifelse(p_yhat < 0.5, 0, 1)
+```
+
+The last thing to do for this simple test is to check the accuracy of the predictions.
+```r
+## test to see how well the data fits
+sum(yhat == y) / nrow(y)
+```
+
+In this instance we find that the predictions are 100% accurate.  This test did not seek to produce a robust model though, so it is possible we overfit the data.  However, overfitting the data would be a sign that the gradiant descent method is doing its job.  
 
 ### Decision Boundary
 

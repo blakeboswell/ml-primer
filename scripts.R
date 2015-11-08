@@ -3,7 +3,8 @@
 g <- function(z) 1 / (1 + exp(-z))
 
 ## plot of logistic function over range [-5. 5] by 0.1
-plot(x = seq(-5, 5, 0.1), y = g(seq(-5, 5, 0.1)),
+z <- seq(-5, 5, 0.1)
+plot(x = z, y = g(z),
      main = 'Logistic Function, g(z) = 1 / (1 + exp(z))',
      xlab = 'z', ylab='g(z)', 
      col = ifelse(g(seq(-5, 5, 0.1)) < 0.5, 2, 4))
@@ -29,42 +30,6 @@ legend("center", inset=0, legend=c("y==0", "y==1"), pch=1, col=c(2,4), horiz=TRU
 
 ## redefine cost function without if-statement
 cost <- function(yhat, y) -y*log(yhat) - (1-y)*log(1 - yhat)
-
-
-
-## logistic function
-g <- function(z) 1 / (1 + exp(-z))
-
-## gradient function
-gradient <- function(x, y, theta) {
-  gradient <- (1/m)* (t(x) %*% (g(x %*% t(theta)) - y))
-  t(gradient)
-}
-
-## gradient decent
-grad.descent <- function(x, y, maxiter=1000, alpha = .05, TOL = 0.01){
-  theta <- matrix(c(0, 0), nrow=1)
-  for(i in 1:maxiter){
-    delta <- gradient(x, y, theta)
-    theta <- theta - alpha*delta 
-    if(sum(delta) < TOL){break}
-  }
-  list(
-    theta = theta,
-    cost = sum(delta)
-  )
-}
-
-
-data <- iris
-head(data)
-data$Class <- ifelse(data$Species == 'setosa', 1, 0)
-head(data)
-x <- data[, 1:4]
-y <- data[, 6]
-
-## logistic function
-g <- function(z) 1 / (1 + exp(-z))
 
 ## gradient object
 ## contains labels, features, and gradient function
@@ -92,15 +57,24 @@ grad.descent <- function(grad.obj, maxiter = 1000, alpha = 0.05){
   theta_n
 }
 
+levels(iris$Species)
+
+require(dplyr)
+## make 0,1 class for species
+data <- iris %>% mutate(class = as.integer(Species == 'setosa')) %>% 
+  select(-Species)
+
+## split features and labels
+x <- data %>% select(-class)
+y <- data %>% select(class)
+
+## use gradient descent to fit parameters
 fit_theta <- grad.descent(grad.obj(x,y))
+p_yhat <- g(as.matrix(x) %*% fit_theta)
+yhat <- ifelse(p_yhat < 0.5, 0, 1)
 
-length(x)
-class(fit_theta)
-
-p <- g(as.matrix(x) %*% fit_theta)
-px <- ifelse(p > 0.5, 1, 0)
-
-sum(px == y) / nrow(data)
+## test to see how well the data fits
+sum(yhat == y) / nrow(data)
 
 View(data.frame(p, y))
 warnings()
