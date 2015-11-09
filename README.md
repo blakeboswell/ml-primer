@@ -20,7 +20,7 @@ z <- seq(-5, 5, 0.1)
 plot(x = z, y = g(z),
      main = 'Logistic Function, g(z) = 1 / (1 + exp(z))',
      xlab = 'z', ylab='g(z)', 
-     col = ifelse(g(seq(-5, 5, 0.1)) < 0.5, 2, 4))
+     col = ifelse(g(z) < 0.5, 2, 4))
 ```
 ![alt text](https://cloud.githubusercontent.com/assets/12782539/11022001/5845831e-8621-11e5-88b0-b1466105921c.png "Figure I")
 
