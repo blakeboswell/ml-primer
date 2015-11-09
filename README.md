@@ -114,7 +114,6 @@ To test this implementation of Logistic regression we can use the Iris data set 
 
 ```r
 require(dplyr)
-require(dplyr)
 ## make 0,1 class for setosa and add constant
 dat <- iris %>% mutate(constant = 1, setosa = as.integer(Species == 'setosa')) %>% 
   select(-Species)
