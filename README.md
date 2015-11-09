@@ -146,7 +146,7 @@ In this instance we find that the predictions are 100% accurate. We did not test
 
 ### Decision Boundary
 
-Looking across the dimensions of the data we can see that there are clear separations.
+Looking across the dimensions of the data we can see that there are clear separations.  In the plot below, blue markers represent that an observation is a setosa.
 ![alt text](https://cloud.githubusercontent.com/assets/12782539/11023692/3f83fde2-864e-11e5-8293-7746480b6130.png "Figure III")
 
 >__Point of Contention__:  Given the above definition in the section __Logistic Function__ it seems to me that Logistic regression is an example of *linear* classification method because z is linear in terms of the parameters theta.  However, I've read elsewhere that Logistic regression is linear because the decision boundary is linear - Andrew Ng gives examples of non-linear decision boundaries produced by logistic regression. So .. I'm not sure ..
