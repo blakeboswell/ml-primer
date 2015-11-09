@@ -26,7 +26,7 @@ plot(x = z, y = g(z),
 
 We can see the additional property of the Logistic function that `g(z) >= 0.5` when `z >= 0`.
 
-Using the Logistic function, we can formulate our hypothesis as the probability that a given a set of features, `x`, will correspond to a label, `y`.  Formally, if `z = theta^T * x`, the linear combination of the parameters theta with the feature vector `x`, then `g(z) = P(y = 1| x; theta)`, or `g(z)` returns the probability that `y = 1` given the features x parameterized by theta.
+Using the Logistic function, we can formulate our hypothesis as the probability that a given a set of features, `x`, will correspond to a label, `y`.  Formally, if `z = theta^T * x`, the linear combination of the parameters theta with the feature vector `x`, then `g(z) = P(y = 1| x; theta)`, or `g(z)` returns the probability that `y = 1` given the features `x` parameterized by theta.
 
 Summary Points:
 
@@ -49,7 +49,7 @@ cost <- function(yhat, y){
   }
 }
 ```
-By examining a plot of performance of the cost function for different values of yhat we can intuit that this function is indeed convex. 
+By examining a plot of performance of the cost function for different values of yhat we can intuit that this function is indeed convex, and we will leave it at that. 
 ```r
 yhat <- seq(0.01, 0.99, 0.01)
 cost_y0 <- cost(yhat, 0)
@@ -70,7 +70,7 @@ cost <- function(yhat, y) -y*log(yhat) - (1-y)*log(1 - yhat)
 ### Minimizing the Logistic Regression Function
 I'm going to use gradient descent for the excercise of implementing it in `R`. 
 
-The first step will be to define the gradient of the `J(theta)`.  I'll leave any explanation of that derivation to other sources.  Here is the result in `R` code:
+The first step will be to define the gradient of the `J(theta)`.  I'll leave the explanation of that derivation to other sources.  Here is the result in `R` code:
 ```r
 ## logistic function
 g <- function(z) 1 / (1 + exp(-z))
@@ -142,11 +142,17 @@ The last thing to do for this simple test is to check the accuracy of the predic
 sum(yhat == y) / nrow(y)
 ```
 
-In this instance we find that the predictions are 100% accurate. We did not test the performance of the model on unseen data, so overfitting is a potential issue.  However, the accuracy of the result indicates that the gradiant descent method is doing its job correctly.  
+In this instance we find that the predictions are 100% accurate. We did not test the performance of the model on unseen data, so overfitting is a potential issue.  However, the accuracy of the result indicates that the gradient descent method is doing its job correctly.  
 
 ### Decision Boundary
 
 Looking across the dimensions of the data we can see that there are clear separations.  In the plot below, blue markers represent that an observation is a setosa.
 ![alt text](https://cloud.githubusercontent.com/assets/12782539/11023692/3f83fde2-864e-11e5-8293-7746480b6130.png "Figure III")
+
+Sepal Length  | Sepal Width  | Petal Length | Petal Width
+------------- | ------------ | ------------ | ------------
+3.475282      | 14.049303    | -23.757502   | -10.735378
+
+
 
 >__Point of Contention__:  Given the above definition in the section __Logistic Function__ it seems to me that Logistic regression is an example of *linear* classification method because z is linear in terms of the parameters theta.  However, I've read elsewhere that Logistic regression is linear because the decision boundary is linear - Andrew Ng gives examples of non-linear decision boundaries produced by logistic regression. So .. I'm not sure ..
