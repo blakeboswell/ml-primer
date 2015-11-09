@@ -1,5 +1,5 @@
 ## Modeling 101 - Logistic Regression
-This post is for me to reinforce the material from the Logistic regression section of Andrew Ng's Machine learning Coursera [course](https://www.coursera.org/learn/machine-learning/home/welcome).  I am familiar with Logistic regression and have applied it succesfully to clasification problems in the past.  My goal with this post is to strengthen my understanding of the connection between the hypothesis, decision boundary, loss function, and parameter optimization involved.
+This post is for me to reinforce the material from the Logistic regression section of Andrew Ng's Machine learning Coursera [course](https://www.coursera.org/learn/machine-learning/home/welcome).  I am familiar with Logistic regression and have applied it succesfully to classification problems in the past.  My goal with this post is to strengthen my understanding of the connection between the hypothesis, decision boundary, loss function, and parameter optimization involved.
 
 ### Logistic Regression for Classification 
 To set up the problem:  given an observed set of labels `Y` having corresponding features `X` we want to predict the label, `y`, that should be assigned to a new set of features `x`.  I will first consider the binary class problem, where the labels `Y` only take on values in {0,1}.
@@ -110,7 +110,7 @@ grad.descent <- function(grad.obj, maxiter = 1000, alpha = 0.05){
   theta_n
 }
 ```
-To test this implementation of Logistic regression we can use the Iris data set in `R`.  The Iris data set contains three species of Iris and features.  To simplify this to a binary classification problem we will create a new variable `setosa` which will be 1 if the observation is a setosa and 0 if it is not.
+To test this implementation of Logistic regression we can use the Iris data set in `R`.  The Iris data set contains observations of three species of Iris and their corresponding features.  To simplify this to a binary classification problem we will create a new variable `setosa` which will be 1 if the observation is a setosa and 0 if it is not.
 
 ```r
 require(dplyr)
