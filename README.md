@@ -1,4 +1,4 @@
-## Modeling 101 - Logistic Regression
+## Classification 101 - Logistic Regression
 This post is for me to reinforce the material from the Logistic regression section of Andrew Ng's Machine learning Coursera [course](https://www.coursera.org/learn/machine-learning/home/welcome).  I am familiar with Logistic regression and have applied it succesfully to classification problems in the past.  My goal with this post is to strengthen my understanding of the connection between the hypothesis, decision boundary, loss function, and parameter optimization involved.
 
 ### Logistic Regression for Classification 
