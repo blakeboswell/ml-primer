@@ -60,8 +60,8 @@ grad.descent <- function(grad.obj, maxiter = 1000, alpha = 0.05){
 levels(iris$Species)
 
 require(dplyr)
-## make 0,1 class for species
-dat <- iris %>% mutate(setosa = as.integer(Species == 'setosa')) %>% 
+## make 0,1 class for setosa and add constant
+dat <- iris %>% mutate(constant = 1, setosa = as.integer(Species == 'setosa')) %>% 
   select(-Species)
 
 ## split features and labels
@@ -69,7 +69,7 @@ x <- dat %>% select(-setosa)
 y <- dat %>% select(setosa)
 
 ## use gradient descent to fit parameter
-fit_theta <- grad.descent(grad.obj(x,y))
+fit_theta <- grad.descent(grad.obj(x,y), maxiter = 100000)
 ## generate predictions using the best fit theta
 p_yhat <- g(as.matrix(x) %*% fit_theta)
 ## convert probabilities to 0,1 label
@@ -77,6 +77,7 @@ yhat <- ifelse(p_yhat < 0.5, 0, 1)
 
 ## test to see how well the data fits
 sum(yhat == y) / nrow(y)
+fit_theta
 
 par(mfrow = c(2, 2))
 plot(dat$Sepal.Length, dat$Sepal.Width,
@@ -87,3 +88,10 @@ plot(dat$Sepal.Length, dat$Petal.Width,
      xlab = 'Sepal Length', ylab = 'Petal Width', col = ifelse(dat$setosa == 1, 4, 1))
 plot(dat$Petal.Length, dat$Sepal.Width, 
      xlab = 'Petal Length', ylab = 'Sepal Width', col = ifelse(dat$setosa == 1, 4, 1))
+
+
+fit <- glm(setosa ~ Sepal.Length + Sepal.Width, data=dat, family=binomial())
+summary(fit)
+fit$coefficients
+
+varImp(fit, scale = FALSE)
