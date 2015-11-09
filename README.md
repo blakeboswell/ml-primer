@@ -101,7 +101,7 @@ grad.obj <- function(x, y) {
 }
 
 ## gradient descent method
-grad.descent <- function(grad.obj, maxiter = 1000, alpha = 0.05){
+grad.descent <- function(grad.obj, maxiter = 10000, alpha = 0.05){
   theta_n = matrix(0, nrow = grad.obj$m, ncol = 1)
   for(i in 1:maxiter){
     theta_o = theta_n
@@ -110,17 +110,16 @@ grad.descent <- function(grad.obj, maxiter = 1000, alpha = 0.05){
   theta_n
 }
 ```
-To test this implementation of Logistic regression we can use the Iris data set in `R`.  The Iris data set contains observations of three species of Iris and their corresponding features.  To simplify this to a binary classification problem we will create a new variable `setosa` which will be 1 if the observation is a setosa and 0 if it is not.
+To test this implementation of Logistic regression we can use the Iris data set in `R`.  The Iris data set contains observations of three species of Iris and their corresponding features.  To simplify this to a binary classification problem we will create a new variable `setosa` which will be 1 if the observation is a setosa and 0 if it is not.  Additionally, we will predict based on only two features, `Sepal.Length` and `Sepal.Width`.
 
 ```r
 require(dplyr)
-## make 0,1 class for setosa and add constant
-dat <- iris %>% mutate(constant = 1, setosa = as.integer(Species == 'setosa')) %>% 
-  select(-Species)
+## make 0,1 class for setosa and add intercept
+dat <- iris %>% mutate(Intercept = 1, Setosa = (Species == 'setosa'))
 
 ## split features and labels
-x <- dat %>% select(-setosa)
-y <- dat %>% select(setosa)
+x <- dat %>% select(Intercept, Sepal.Length, Sepal.Width)
+y <- dat %>% select(Setosa)
 ```
 
 Next we will run the `grad.descent` method to find the best fit `theta`.  Then we can plug `theta` back into the Logistic function to produce a probability that an observation is a setosa.  We will then apply the decision rule if probability of an observation being a setosa is greater than 0.5 then label it as a setosa, otherwise do not.
@@ -146,12 +145,28 @@ In this instance we find that the predictions are 100% accurate. We did not test
 
 ### Decision Boundary
 
-Looking across the dimensions of the data we can see that there are clear separations.  In the plot below, blue markers represent that an observation is a setosa.
-![alt text](https://cloud.githubusercontent.com/assets/12782539/11023692/3f83fde2-864e-11e5-8293-7746480b6130.png "Figure III")
+The best fit values for theta determined by the gradient descent method are as follows: 
 
-Sepal Length  | Sepal Width  | Petal Length | Petal Width
-------------- | ------------ | ------------ | ------------
-3.475282      | 14.049303    | -23.757502   | -10.735378
+Intercept	  | Sepal Length | Sepal Width
+------------- | ------------ | ------------
+45.85848      | -19.48671    | 18.89480 
+
+In order to characterize the boundary we rely on the fact that `g(z) < 0.5` when `z < 0` which means that the decision boundary is where `theta^T * x < 0`.  Therefore we have the boundary, `theta_1 + theta_2*x_1 + theta_2*x_2 >=0`.  This relationship can be rearranged to form a linear equation.  Once the slope and intercept of the boundary are obtained we can plot them as follows:
+
+```r
+## calculate coefficients
+slope = -fit_theta[1] / fit_theta[3]
+intercept = -fit_theta[2] / fit_theta[3]
+
+## plot the decision boundary
+plot(x$Sepal.Length, x$Sepal.Width, main="Logistic Regression Decision Boundary",
+     xlab = 'Sepal Length', ylab = 'Sepal Width', col = ifelse(y == 1, 4, 1))
+abline(-fit_theta[1] / fit_theta[3], -fit_theta[2] / fit_theta[3])
+```
+![alt text](https://cloud.githubusercontent.com/assets/12782539/11026704/82806a86-867b-11e5-9293-1d82792b92cf.png "Figure III")
+
+
+
 
 
 

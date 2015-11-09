@@ -48,7 +48,7 @@ grad.obj <- function(x, y) {
 }
 
 ## gradient descent method
-grad.descent <- function(grad.obj, maxiter = 1000, alpha = 0.05){
+grad.descent <- function(grad.obj, maxiter = 10000, alpha = 0.05){
   theta_n = matrix(0, nrow = grad.obj$m, ncol = 1)
   for(i in 1:maxiter){
     theta_o = theta_n
@@ -57,19 +57,18 @@ grad.descent <- function(grad.obj, maxiter = 1000, alpha = 0.05){
   theta_n
 }
 
-levels(iris$Species)
+
 
 require(dplyr)
-## make 0,1 class for setosa and add constant
-dat <- iris %>% mutate(constant = 1, setosa = as.integer(Species == 'setosa')) %>% 
-  select(-Species)
+## make 0,1 class for setosa and add intercept
+dat <- iris %>% mutate(Intercept = 1, Setosa = (Species == 'setosa'))
 
 ## split features and labels
-x <- dat %>% select(-setosa)
-y <- dat %>% select(setosa)
+x <- dat %>% select(Intercept, Sepal.Length, Sepal.Width)
+y <- dat %>% select(Setosa)
 
 ## use gradient descent to fit parameter
-fit_theta <- grad.descent(grad.obj(x,y), maxiter = 100000)
+fit_theta <- grad.descent(grad.obj(x,y))
 ## generate predictions using the best fit theta
 p_yhat <- g(as.matrix(x) %*% fit_theta)
 ## convert probabilities to 0,1 label
@@ -79,19 +78,7 @@ yhat <- ifelse(p_yhat < 0.5, 0, 1)
 sum(yhat == y) / nrow(y)
 fit_theta
 
-par(mfrow = c(2, 2))
-plot(dat$Sepal.Length, dat$Sepal.Width,
-     xlab = 'Sepal Length', ylab = 'Sepal Width', col = ifelse(dat$setosa == 1, 4, 1))
-plot(dat$Petal.Length, dat$Petal.Width, 
-     xlab = 'Petal Length', ylab = 'Petal Width', col = ifelse(dat$setosa == 1, 4, 1))
-plot(dat$Sepal.Length, dat$Petal.Width, 
-     xlab = 'Sepal Length', ylab = 'Petal Width', col = ifelse(dat$setosa == 1, 4, 1))
-plot(dat$Petal.Length, dat$Sepal.Width, 
-     xlab = 'Petal Length', ylab = 'Sepal Width', col = ifelse(dat$setosa == 1, 4, 1))
-
-
-fit <- glm(setosa ~ Sepal.Length + Sepal.Width, data=dat, family=binomial())
-summary(fit)
-fit$coefficients
-
-varImp(fit, scale = FALSE)
+## plot the decision boundary
+plot(x$Sepal.Length, x$Sepal.Width, main="Logistic Regression Decision Boundary",
+     xlab = 'Sepal Length', ylab = 'Sepal Width', col = ifelse(y == 1, 4, 1))
+abline(-fit_theta[1] / fit_theta[3], -fit_theta[2] / fit_theta[3])
