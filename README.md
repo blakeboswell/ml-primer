@@ -151,7 +151,7 @@ Intercept	  | Sepal Length | Sepal Width
 ------------- | ------------ | ------------
 45.85848      | -19.48671    | 18.89480 
 
-In order to characterize the boundary we rely on the fact that `g(z) < 0.5` when `z < 0` which means that the decision boundary is where `theta^T * x < 0`.  Therefore we have the boundary, `theta_1 + theta_2*x_1 + theta_2*x_2 >=0`.  This relationship can be rearranged to form a linear equation.  Once the slope and intercept of the boundary are obtained we can plot them as follows:
+In order to characterize the boundary we rely on the fact that `g(z) < 0.5` when `z < 0` which means that the decision boundary is where `theta^T * x < 0`.  Therefore we have the boundary, `theta_0 + theta_1*x_1 + theta_2*x_2 >=0`.  This relationship can be rearranged to form a linear equation.  Once the slope and intercept of the boundary are obtained we can plot them as follows:
 
 ```r
 ## calculate coefficients
@@ -161,7 +161,7 @@ intercept = -fit_theta[2] / fit_theta[3]
 ## plot the decision boundary
 plot(x$Sepal.Length, x$Sepal.Width, main="Logistic Regression Decision Boundary",
      xlab = 'Sepal Length', ylab = 'Sepal Width', col = ifelse(y == 1, 4, 1))
-abline(-fit_theta[1] / fit_theta[3], -fit_theta[2] / fit_theta[3])
+abline(slope, intercept)
 ```
 ![alt text](https://cloud.githubusercontent.com/assets/12782539/11026704/82806a86-867b-11e5-9293-1d82792b92cf.png "Figure III")
 

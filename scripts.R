@@ -81,4 +81,4 @@ fit_theta
 ## plot the decision boundary
 plot(x$Sepal.Length, x$Sepal.Width, main="Logistic Regression Decision Boundary",
      xlab = 'Sepal Length', ylab = 'Sepal Width', col = ifelse(y == 1, 4, 1))
-abline(-fit_theta[1] / fit_theta[3], -fit_theta[2] / fit_theta[3])
+abline(slope, intercept)
