@@ -142,7 +142,7 @@ The last thing to do for this simple test is to check the accuracy of the predic
 sum(yhat == y) / nrow(y)
 ```
 
-In this instance we find that the predictions are 100% accurate.  This test did not seek to produce a robust model though, so it is possible we overfit the data.  However, overfitting the data would be a sign that the gradiant descent method is doing its job.  
+In this instance we find that the predictions are 100% accurate. We did not test the performance of the model on unseen data, so overfitting is a potential issue.  However, the accuracy of the result indicates that the gradiant descent method is doing its job correctly.  
 
 ### Decision Boundary
 
