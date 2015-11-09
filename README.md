@@ -115,12 +115,12 @@ To test this implementation of Logistic regression we can use the Iris data set 
 ```r
 require(dplyr)
 ## make 0,1 class for species
-data <- iris %>% mutate(setosa = as.integer(setosa == 'setosa')) %>% 
+dat <- iris %>% mutate(setosa = as.integer(Species == 'setosa')) %>% 
   select(-Species)
 
 ## split features and labels
-x <- data %>% select(-setosa)
-y <- data %>% select(setosa)
+x <- dat %>% select(-setosa)
+y <- dat %>% select(setosa)
 ```
 
 Next we will run the `grad.descent` method to find the best fit `theta`.  Then we can plug `theta` back into the Logistic function to produce a probability that an observation is a setosa.  We will then apply the decision rule if probability of an observation being a setosa is greater than 0.5 then label it as a setosa, otherwise do not.
@@ -146,6 +146,7 @@ In this instance we find that the predictions are 100% accurate. We did not test
 
 ### Decision Boundary
 
-
+Looking across the dimensions of the data we can see that there are clear separations.
+![alt text](https://cloud.githubusercontent.com/assets/12782539/11023692/3f83fde2-864e-11e5-8293-7746480b6130.png "Figure III")
 
 >__Point of Contention__:  Given the above definition in the section __Logistic Function__ it seems to me that Logistic regression is an example of *linear* classification method because z is linear in terms of the parameters theta.  However, I've read elsewhere that Logistic regression is linear because the decision boundary is linear - Andrew Ng gives examples of non-linear decision boundaries produced by logistic regression. So .. I'm not sure ..

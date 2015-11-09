@@ -61,21 +61,29 @@ levels(iris$Species)
 
 require(dplyr)
 ## make 0,1 class for species
-data <- iris %>% mutate(class = as.integer(Species == 'setosa')) %>% 
+dat <- iris %>% mutate(setosa = as.integer(Species == 'setosa')) %>% 
   select(-Species)
 
 ## split features and labels
-x <- data %>% select(-class)
-y <- data %>% select(class)
+x <- dat %>% select(-setosa)
+y <- dat %>% select(setosa)
 
-## use gradient descent to fit parameters
+## use gradient descent to fit parameter
 fit_theta <- grad.descent(grad.obj(x,y))
+## generate predictions using the best fit theta
 p_yhat <- g(as.matrix(x) %*% fit_theta)
+## convert probabilities to 0,1 label
 yhat <- ifelse(p_yhat < 0.5, 0, 1)
 
 ## test to see how well the data fits
-sum(yhat == y) / nrow(data)
+sum(yhat == y) / nrow(y)
 
-View(data.frame(p, y))
-warnings()
-ncol(as.matrix(x))
+par(mfrow = c(2, 2))
+plot(dat$Sepal.Length, dat$Sepal.Width,
+     xlab = 'Sepal Length', ylab = 'Sepal Width', col = ifelse(dat$setosa == 1, 4, 1))
+plot(dat$Petal.Length, dat$Petal.Width, 
+     xlab = 'Petal Length', ylab = 'Petal Width', col = ifelse(dat$setosa == 1, 4, 1))
+plot(dat$Sepal.Length, dat$Petal.Width, 
+     xlab = 'Sepal Length', ylab = 'Petal Width', col = ifelse(dat$setosa == 1, 4, 1))
+plot(dat$Petal.Length, dat$Sepal.Width, 
+     xlab = 'Petal Length', ylab = 'Sepal Width', col = ifelse(dat$setosa == 1, 4, 1))
