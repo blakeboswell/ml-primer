@@ -1,5 +1,5 @@
 ## Logistic Regression
-Here we reproduce the logistic regression material covered in [Andrew Ng's Machine learning course](https://www.coursera.org/learn/machine-learning/home/welcome) on Coursera.  
+Here I reproduce the logistic regression material covered in [Andrew Ng's Machine learning course](https://www.coursera.org/learn/machine-learning/home/welcome) on Coursera in the R programming language.
 
 ### Logistic Regression for Binary Classification 
 To set up the problem:  given an observed set of labels `Y` having corresponding features `X` we want to predict the label, `y`, that should be assigned to a new set of features `x`.  I will first consider the binary class problem, where the labels `Y` only take on values in {0,1}.
