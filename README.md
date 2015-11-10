@@ -1,5 +1,5 @@
 ## Logistic Regression
-This post is for me to reinforce the material from the Logistic regression section of Andrew Ng's Machine learning Coursera [course](https://www.coursera.org/learn/machine-learning/home/welcome).  I am familiar with Logistic regression and have applied it succesfully to classification problems in the past.  My goal with this post is to strengthen my understanding of the connection between the hypothesis, decision boundary, loss function, and parameter optimization involved.
+Here we reproduce that reproduce the logistic regression material covered in [Andrew Ng's Machine learning course](https://www.coursera.org/learn/machine-learning/home/welcome) on Coursera.  
 
 ### Logistic Regression for Binary Classification 
 To set up the problem:  given an observed set of labels `Y` having corresponding features `X` we want to predict the label, `y`, that should be assigned to a new set of features `x`.  I will first consider the binary class problem, where the labels `Y` only take on values in {0,1}.
