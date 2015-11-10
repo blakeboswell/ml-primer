@@ -22,7 +22,7 @@ plot(x = z, y = g(z),
      xlab = 'z', ylab='g(z)', 
      col = ifelse(g(z) < 0.5, 2, 4))
 ```
-![alt text](https://cloud.githubusercontent.com/assets/12782539/11022001/5845831e-8621-11e5-88b0-b1466105921c.png "Figure I")
+![alt text](https://cloud.githubusercontent.com/assets/12782539/11078404/b7123578-87d3-11e5-96c8-e0cc26a94713.png "Figure I")
 
 We can see the additional property of the Logistic function that `g(z) >= 0.5` when `z >= 0`.
 
@@ -60,7 +60,7 @@ matplot (yhat, cbind (cost_y0, cost_y1), pch = 1,
          col=c(2,4))
 legend("center", inset=0, legend=c("y==0", "y==1"), pch=1, col=c(2,4), horiz=TRUE)
 ```
-![alt text](https://cloud.githubusercontent.com/assets/12782539/11022303/50653736-8629-11e5-9df1-49d38eb06d27.png "Figure II")
+![alt text](https://cloud.githubusercontent.com/assets/12782539/11078413/c67e8eb2-87d3-11e5-8b6a-43b2bd70ffb1.png "Figure II")
 
 We can express the cost function without an if-statement as follows:
 ```r

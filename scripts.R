@@ -7,7 +7,7 @@ z <- seq(-5, 5, 0.1)
 plot(x = z, y = g(z),
      main = 'Logistic Function, g(z) = 1 / (1 + exp(z))',
      xlab = 'z', ylab='g(z)', 
-     col = ifelse(g(z) < 0.5, 2, 4))
+     col = ifelse(g(z) < 0.5, 1, 4))
 
 ## cost function
 cost <- function(yhat, y){
@@ -17,7 +17,8 @@ cost <- function(yhat, y){
     -log(1 - yhat)
   }
 }
-
+dev.off()
+plot.new()
 ## plot of cost function for y in {0,1} and yhat in (0,1)
 yhat <- seq(0.01, 0.99, 0.01)
 cost_y0 <- cost(yhat, 0)
@@ -25,8 +26,8 @@ cost_y1 <- cost(yhat, 1)
 matplot (yhat, cbind (cost_y0, cost_y1), pch = 1,
          main = 'Cost Function',
          xlab = 'yhat', ylab = 'Cost',
-         col=c(2,4))
-legend("center", inset=0, legend=c("y==0", "y==1"), pch=1, col=c(2,4), horiz=TRUE)
+         col=c(1,4))
+legend("top", inset=0, legend=c("y==0", "y==1"), pch=1, col=c(1,4), horiz=TRUE)
 
 ## redefine cost function without if-statement
 cost <- function(yhat, y) -y*log(yhat) - (1-y)*log(1 - yhat)

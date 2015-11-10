@@ -3,6 +3,10 @@ logistic.gradient <- function(x, y, theta){
   t(x) %*% (1 / (1 + exp(-(x %*% theta))) - y)
 }
 
+linear.gradient <- function(x, y, theta){
+  t(x) %>% (x %*% theta - y)
+}
+
 gradient.descent <- function(gradient, x, y){
   
   x <- as.matrix(x)
@@ -37,13 +41,13 @@ x <- iris %>% select(Sepal.Length, Sepal.Width) %>%
 y <- iris %>% mutate(Setosa = as.integer(Species == 'setosa')) %>%
               select(Setosa)
 
-mdl <- gradient.descent(logistic.gradient, x, y)
+log.mdl <- gradient.descent(logistic.gradient, x, y)
 
-mdl$fit()
-mdl$theta()  
-mdl$error()
+log.mdl$fit()
+log.mdl$theta()  
 
-theta <- mdl$theta()
+
+theta <- log.mdl$theta()
 
 theta
 
@@ -58,3 +62,10 @@ intercept
 plot(x$Sepal.Length, x$Sepal.Width, main="Logistic Regression Decision Boundary",
      xlab = 'Sepal Length', ylab = 'Sepal Width', col = ifelse(y == 1, 4, 1))
 abline(slope, intercept)
+
+reg.mdl <- gradient.descent(linear.gradient, as.matrix(longley$GNP, longley$Population), longley$Unemployed)
+lin.theta <- reg.mdl$theta()
+lin.theta
+
+plot(as.matrix(longley$GNP, longley$Population), longley$Unemployed)
+
