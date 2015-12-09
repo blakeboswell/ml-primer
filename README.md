@@ -3,3 +3,4 @@
 [Binomial Logistic Regression](http://blakeboswell.github.io/2015/11/10/Logistic-Regression.html)
 
 - binomial_logistic.R
+- generalized linear models
